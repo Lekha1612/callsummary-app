@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transfer - Bank Transaction System</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Transfer</h1>
+    </header>
+    <main>
+        <div class="container">
+            <form id="transfer-form">
+                <label for="recipient-name">Recipient Name (3 to 30 letters)*:</label>
+                <input type="text" id="recipient-name" required>
+                <div id="recipient-name-error" class="error"></div>
+                
+                <label for="user-account-number">User Account Number*:</label>
+                <input type="text" id="user-account-number" value="562123459856" readonly>
+                
+                <label for="recipient-account-number">Recipient Account Number (12 digits)*:</label>
+                <input type="text" id="recipient-account-number" required>
+                <div id="recipient-account-number-error" class="error"></div>
+                
+                <label for="recipient-ifsc-code">Recipient IFSC Code*:</label>
+                <input type="text" id="recipient-ifsc-code" required>
+                <div id="recipient-ifsc-code-error" class="error"></div>
+                
+                <label for="pan-number">Your PAN Card Number*:</label>
+                <input type="text" id="pan-number" required>
+                <div id="pan-number-error" class="error"></div>
+                
+                <label for="account-type">Account Type*:</label>
+                <select id="account-type" required>
+                    <option value="">Select Type</option>
+                    <option value="Current Account">Current Account</option>
+                    <option value="Savings Account">Savings Account</option>
+                </select>
+                <div id="account-type-error" class="error"></div>
+                
+                <label for="transfer-amount">Amount to Transfer*:</label>
+                <input type="number" id="transfer-amount" required>
+                <div id="transfer-amount-error" class="error"></div>
+                
+                <button type="submit">Transfer</button>
+            </form>
+            <div id="acknowledgment"></div>
+        </div>
+    </main>
+    <script src="js/transfer.js"></script>
+</body>
+<body class="transfer-page">
+</html>
