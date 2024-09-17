@@ -3,7 +3,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-and-mongodb-deploymentssss
+  name: Rahul_CPBTS
 spec:
   replicas: 2
   selector:
