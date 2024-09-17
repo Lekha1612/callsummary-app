@@ -3,7 +3,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: Rahul_CPBTS
+  name: rahul-cpbts
 spec:
   replicas: 2
   selector:
