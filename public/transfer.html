@@ -3,12 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transfer - Bank Transaction System</title>
+    <title>Transfer - Digital Bank</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="images/logo.jpg" type="image/jpeg">
 </head>
-<body>
+<body class="transfer-page">
     <header>
-        <h1>Transfer</h1>
+        <div class="header-container">
+            <h1 class="header-title">Transfer</h1>
+            <nav class="header-nav">
+                <a href="credit.html" class="nav-button">Credit</a>
+                <a href="debit.html" class="nav-button">Debit</a>
+                <a href="index.html" class="back-button">Back</a>
+            </nav>
+        </div>
     </header>
     <main>
         <div class="container">
@@ -18,11 +26,15 @@
                 <div id="recipient-name-error" class="error"></div>
                 
                 <label for="user-account-number">User Account Number*:</label>
-                <input type="text" id="user-account-number" value="562123459856" readonly>
+                <div id="user-account-number" class="non-copyable">562123459856</div>
                 
                 <label for="recipient-account-number">Recipient Account Number (12 digits)*:</label>
                 <input type="text" id="recipient-account-number" required>
                 <div id="recipient-account-number-error" class="error"></div>
+                
+                <label for="re-enter-recipient-account-number">Re-enter Recipient Account Number*:</label>
+                <input type="text" id="re-enter-recipient-account-number" required>
+                <div id="re-enter-recipient-account-number-error" class="error"></div>
                 
                 <label for="recipient-ifsc-code">Recipient IFSC Code*:</label>
                 <input type="text" id="recipient-ifsc-code" required>
@@ -51,5 +63,4 @@
     </main>
     <script src="js/transfer.js"></script>
 </body>
-<body class="transfer-page">
 </html>

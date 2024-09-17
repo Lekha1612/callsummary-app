@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const fields = [
         { id: 'recipient-name', regex: /[A-Za-z\s]{3,30}$/, error: 'Recipient Name must be 3 to 30 letters.' },
         { id: 'recipient-account-number', regex: /^\d{12}$/, error: 'Recipient Account Number must be 12 digits.' },
+        { id: 're-enter-recipient-account-number', regex: /^\d{12}$/, error: 'Re-enter Recipient Account Number ' },
         { id: 'recipient-ifsc-code', regex: /^[A-Z]{4}0[A-Z0-9]{6}$/, error: 'Invalid IFSC Code.' },
         { id: 'pan-number', regex: /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, error: 'Invalid PAN Card Number.' },
         { id: 'account-type', regex: /.+/, error: 'Please select an account type.' },
@@ -34,9 +35,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 input.value = input.value.toUpperCase(); // Convert to uppercase
                 validateField(field);
             });
+        } else if (field.id === 're-enter-recipient-account-number') {
+            input.addEventListener('input', () => validateReEnteredAccountNumber());
         } else {
             input.addEventListener('input', () => validateField(field));
         }
+    });
+
+    // Add input restrictions for recipient account number fields
+    const restrictInputToDigits = (inputElement) => {
+        inputElement.addEventListener('input', (e) => {
+            e.target.value = e.target.value.replace(/\D/g, '');
+        });
+    };
+
+    restrictInputToDigits(document.getElementById('recipient-account-number'));
+    restrictInputToDigits(document.getElementById('re-enter-recipient-account-number'));
+
+    // Prevent numbers in recipient name field
+    const recipientNameInput = document.getElementById('recipient-name');
+    recipientNameInput.addEventListener('input', (e) => {
+        e.target.value = e.target.value.replace(/[0-9]/g, '');
     });
 
     form.addEventListener('submit', async (e) => {
@@ -89,14 +108,35 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function validateReEnteredAccountNumber() {
+        const recipientAccountNumber = document.getElementById('recipient-account-number').value;
+        const reEnterRecipientAccountNumber = document.getElementById('re-enter-recipient-account-number');
+        const error = document.getElementById('re-enter-recipient-account-number-error');
+
+        if (reEnterRecipientAccountNumber.value.length < 12) {
+            error.textContent = 'Re-enter recipient account number';
+            return false;
+        } else if (recipientAccountNumber !== reEnterRecipientAccountNumber.value) {
+            error.textContent = "Recipient number doesn't match.";
+            return false;
+        } else {
+            error.textContent = '';
+            return true;
+        }
+    }
+
     function validateForm() {
         let isValid = true;
 
         fields.forEach(field => {
-            if (!validateField(field)) {
+            if (field.id !== 're-enter-recipient-account-number' && !validateField(field)) {
                 isValid = false;
             }
         });
+
+        if (!validateReEnteredAccountNumber()) {
+            isValid = false;
+        }
 
         const userAccountNumber = document.getElementById('user-account-number').value;
         const recipientAccountNumber = document.getElementById('recipient-account-number').value;

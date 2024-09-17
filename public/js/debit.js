@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const fields = [
         { id: 'user-name', regex: /[A-Za-z\s]{3,30}$/, error: 'User Name must be 3 to 30 letters.' },
         { id: 'account-number', regex: /^\d{12}$/, error: 'Account Number must be 12 digits.' },
+        { id: 'retype-account-number', regex: /^\d{12}$/, error: 'Re-enter recipient account number' },
         { id: 'ifsc-code', regex: /^[A-Z]{4}0[A-Z0-9]{6}$/, error: 'Invalid IFSC Code.' },
         { id: 'phone-number', regex: /^\d{10}$/, error: 'Phone Number must be 10 digits.' },
         { id: 'email', regex: /^[^\s@]+@[^\s@]+\.com$/, error: 'Invalid email address.' },
@@ -31,6 +32,39 @@ document.addEventListener('DOMContentLoaded', () => {
     fields.forEach(field => {
         const input = document.getElementById(field.id);
         input.addEventListener('input', () => validateField(field));
+    });
+
+    // Add event listener for account number matching
+    const retypeAccountNumber = document.getElementById('retype-account-number');
+    retypeAccountNumber.addEventListener('input', validateAccountMatch);
+
+    // Add event listener for IFSC code uppercase conversion
+    const ifscCodeInput = document.getElementById('ifsc-code');
+    ifscCodeInput.addEventListener('input', () => {
+        ifscCodeInput.value = ifscCodeInput.value.toUpperCase();
+    });
+
+    // Add input restrictions for account number, re-type account number, and phone number
+    const restrictInputToDigits = (inputElement) => {
+        inputElement.addEventListener('input', (e) => {
+            e.target.value = e.target.value.replace(/\D/g, '');
+        });
+    };
+
+    restrictInputToDigits(document.getElementById('account-number'));
+    restrictInputToDigits(document.getElementById('retype-account-number'));
+    restrictInputToDigits(document.getElementById('phone-number'));
+
+    // Prevent numbers in user name field
+    const userNameInput = document.getElementById('user-name');
+    userNameInput.addEventListener('input', (e) => {
+        e.target.value = e.target.value.replace(/[0-9]/g, '');
+    });
+
+    // Convert email to lowercase
+    const emailInput = document.getElementById('email');
+    emailInput.addEventListener('input', (e) => {
+        e.target.value = e.target.value.toLowerCase();
     });
 
     form.addEventListener('submit', async (e) => {
@@ -88,6 +122,23 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function validateAccountMatch() {
+        const accountNumber = document.getElementById('account-number').value;
+        const retypeAccountNumber = document.getElementById('retype-account-number').value;
+        const error = document.getElementById('retype-account-number-error');
+
+        if (retypeAccountNumber.length !== 12) {
+            error.textContent = 'Recipient Account Number must be 12 digits.';
+            return false;
+        } else if (accountNumber !== retypeAccountNumber) {
+            error.textContent = 'Recipient number doesn\'t match.';
+            return false;
+        } else {
+            error.textContent = '';
+            return true;
+        }
+    }
+
     function validateForm() {
         let isValid = true;
 
@@ -96,6 +147,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 isValid = false;
             }
         });
+
+        if (!validateAccountMatch()) {
+            isValid = false;
+        }
 
         return isValid;
     }
