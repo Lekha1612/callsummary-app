@@ -3,7 +3,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-and-mongodb-deployment
+  name: app-and-mongodb-deploymentssss
 spec:
   replicas: 2
   selector:
