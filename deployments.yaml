@@ -1,5 +1,3 @@
-
- 
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -8,11 +6,11 @@ spec:
   replicas: 3
   selector:
     matchLabels:
-      app: myapp
+      app: app-myapp
   template:
     metadata:
       labels:
-        app: myapp
+        app: app-myapp
     spec:
       containers:
       - name: my-app-container
@@ -20,9 +18,9 @@ spec:
         ports:
           - containerPort: 4545
         env:
-         - name: MONGODB_URI
-           value: mongodb://mongo:27017/bank_transaction_system
-      - name: docker
+          - name: MONGODB_URI
+            value: mongodb://mongo-service:27017/bank_transaction_system
+      - name: mongo-container
         image: mongo:latest
         ports:
-           - containerPort: 27017
+          - containerPort: 27017
