@@ -3,7 +3,7 @@ services:
     build: .
     container_name: Banktrans
     ports:
-      - "3000:3000"
+      - "4545:4545"
     environment:
       - MONGODB_URI=mongodb://mongo:27017/bank_transaction_system
     volumes:

@@ -7,6 +7,6 @@ spec:
     app: myapp
   ports:
   - port: 3057
-    targetPort: 3000
+    targetPort: 4545
     protocol: TCP
   type: LoadBalancer
