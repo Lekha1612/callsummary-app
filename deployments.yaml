@@ -16,10 +16,10 @@ spec:
       - name: my-app-container
         image: rahul1516/cpbts-app:latest
         ports:
-          - containerPort: 4545
+        - containerPort: 4545
         env:
-          - name: MONGODB_URI
-            value: mongodb://mongo-service:27017/bank_transaction_system
+        - name: MONGODB_URI
+          value: mongodb://mongo-service:27017/bank_transaction_system
       - name: mongo-container
         image: mongo:latest
         ports:
